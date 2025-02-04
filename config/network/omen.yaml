@@ -1,0 +1,63 @@
+_target_: omen.omen.OMEN
+_recursive_: false  # Prevent recursive instantiation
+
+config:
+  # Base parameters
+  n_variables: 20  # Must be specified
+  periodic: null  # Must be specified, or is set to [False] * n_variables
+  sessions: null  # must be a list of strings with sessions names
+  n_inputs: 16  # must be a list of integers with the number of "channels" for each session
+
+  # CAN parameters
+  cans:
+    module:
+      _target_: omen.can.CAN
+      N: 48
+      beta: 10
+      sigma: 0.6
+      tau: 1.7
+      theta_pad: 0.2
+
+  augmentations:
+      temporal_jitter:
+        _target_: omen.augmentations.TemporalJitter
+        max_shift: 0
+        apply: false
+
+
+  # Portent parameters
+  portent:
+    _target_: omen.portent.Portent
+    activation: relu
+
+    can_heads:
+      _target_: omen.modules.MLP
+      activation: ${network.config.portent.activation}
+      n_hidden: 64
+      n_inputs: ${network.config.portent.encoder.n_outputs}  # Reference encoding_size
+      n_layers: 1
+      n_outputs: ${network.config.cans.module.N}  # Fixed reference
+      dropout: 0.2
+
+    encoder:
+      _target_: omen.modules.tCNN
+      activation: ${network.config.portent.activation}
+      channel_kernel_size: 1
+      dilation: 3
+      kernel_size: 11 
+      n_conv_groups: 1
+      n_hidden: 128
+      n_inputs: ${network.config.n_inputs}  # Reference the top-level n_inputs
+      n_kernels: 4
+      n_layers: 1
+      n_outputs: 64 
+      spatial_conv: false
+      dropout: 0.2
+
+  # Semantic heads
+  semantic_heads:
+    module:
+      _target_: torch.nn.Linear
+      in_features: 0  # Set dynamically
+      out_features: ${network.config.portent.encoder.n_inputs}
+    skip: true

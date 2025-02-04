@@ -1,0 +1,2 @@
+__target__: emg2pose.omen.decoder.ScalingDecoder
+scale: 0.1

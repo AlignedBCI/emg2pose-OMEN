@@ -95,8 +95,8 @@ def train(
             lr_scheduler=config.lr_scheduler,
         )
     else:
-        log.info(f"Instantiating LightningModule {Emg2PoseModule}")
         module = make_lightning_module(config)
+        log.info(f"Instantiating LightningModule {module}>{module.model}")
 
     log.info(f"Instantiating LightningDataModule {config.datamodule}")
     datamodule = make_data_module(config)

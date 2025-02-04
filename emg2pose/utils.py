@@ -66,6 +66,7 @@ def load_splits(
     """Load train, val, and test datasets from metadata csv."""
 
     # Load dataframe
+    print(f"Looking here for metadata: {metadata_file}")
     df = pd.read_csv(metadata_file)
 
     # Optionally subsample
