@@ -96,7 +96,7 @@ def train(
         )
     else:
         module = make_lightning_module(config)
-        log.info(f"Instantiating LightningModule {module}>{module.model}")
+        log.info(f"Instantiating LightningModule {module}")
 
     log.info(f"Instantiating LightningDataModule {config.datamodule}")
     datamodule = make_data_module(config)

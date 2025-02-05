@@ -7,6 +7,7 @@ class ScalingDecoder(nn.Module):
         self.scale = scale
 
     def forward(self, x):
+        raise ValueError((x.shape))
         return x * self.scale
 
 

@@ -138,9 +138,11 @@ class StatePoseModule(BasePoseModule):
 
             # Predict pose
             pred = self.decoder(inputs)
+            raise ValueError((pred.shape, preds[-1].shape))
             if self.predict_vel:
                 pred = pred + preds[-1]
             preds.append(pred)
+
 
         # Remove first pred, because it is the initial_pos (not a network prediction)
         return torch.stack(preds[1:], dim=-1)
