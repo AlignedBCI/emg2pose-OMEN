@@ -11,7 +11,7 @@ data_location: ~/emg2pose_data
 seed: 42
 
 batch_size: 64
-num_workers: 0  # Number of workers for dataloading
+num_workers: 12  # Number of workers for dataloading
 
 train: True  # Whether to run training
 eval: True  # Whether to run evaluation on validation and test splits
@@ -44,6 +44,14 @@ callbacks:
     patience: 50
     check_on_train_epoch_end: False
     verbose: True
+  - _target_: pytorch_lightning.callbacks.RichProgressBar
+    leave: True
+
+logger:
+  _target_: pytorch_lightning.loggers.WandbLogger
+  project: "emg2pose"
+  name: ${now:%Y-%m-%d-%H-%M}
+  log_model: True
 
 # Customize hydra directory outputs
 # see: https://hydra.cc/docs/0.11/configure_hydra/workdir/

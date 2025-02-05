@@ -25,7 +25,6 @@ config:
         max_shift: 0
         apply: false
 
-
   # Portent parameters
   portent:
     _target_: omen.portent.Portent
@@ -44,7 +43,7 @@ config:
       _target_: omen.modules.tCNN
       activation: ${network.config.portent.activation}
       channel_kernel_size: 1
-      dilation: 3
+      dilation: 11
       kernel_size: 11 
       n_conv_groups: 1
       n_hidden: 128

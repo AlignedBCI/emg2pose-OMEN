@@ -111,6 +111,7 @@ def train(
     trainer = pl.Trainer(
         **config.trainer,
         callbacks=callbacks,
+        logger=instantiate(config.logger),
     )
 
     results = {}

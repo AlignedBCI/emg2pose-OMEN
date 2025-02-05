@@ -9,7 +9,7 @@ defaults:
 provide_initial_pos: True
 pose_module:
   predict_vel: True
-  state_condition: True
+  state_condition: False
 
 # Hyperparametersa
 optimizer:

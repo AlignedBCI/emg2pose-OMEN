@@ -8,7 +8,6 @@
 import torch
 from emg2pose.constants import EMG_SAMPLE_RATE
 from emg2pose.networks import SequentialLSTM
-
 from torch import nn
 from torch.nn.functional import interpolate
 
@@ -138,7 +137,7 @@ class StatePoseModule(BasePoseModule):
 
             # Predict pose
             pred = self.decoder(inputs)
-            raise ValueError((pred.shape, preds[-1].shape))
+
             if self.predict_vel:
                 pred = pred + preds[-1]
             preds.append(pred)
