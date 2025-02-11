@@ -11,7 +11,7 @@ data_location: ~/emg2pose_data
 seed: 42
 
 batch_size: 64
-num_workers: 12  # Number of workers for dataloading
+num_workers: 0  # Number of workers for dataloading
 
 train: True  # Whether to run training
 eval: True  # Whether to run evaluation on validation and test splits

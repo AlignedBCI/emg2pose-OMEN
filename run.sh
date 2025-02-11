@@ -11,19 +11,14 @@
 
 
 # ---------------------------------- module ---------------------------------- #
-echo "Loading modules"
-source /etc/profile.d/modules.sh
-module use /cm/shared/modulefiles
+module load openmind/miniconda/4.9.2-py3.9
 
-# ----------------------------------- task ----------------------------------- #
-
-echo "Running python script"
 
 # cd to project
 cd /om2/user/claudif/DecodingAlgorithms/emg2pose-OMEN
 
 # execute in singularity container
 export CUDA_VISIBLE_DEVICES=0
-conda activate test2
+conda activate omen2
 
 python run.py
