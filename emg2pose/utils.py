@@ -26,7 +26,7 @@ from tqdm import tqdm
 def instantiate_optimizer_and_scheduler(
     params: Iterator[nn.Parameter],
     optimizer_config: DictConfig,
-    lr_scheduler_config: DictConfig | None,
+    lr_scheduler_config: DictConfig,
 ) -> dict[str, Any]:
     optimizer = instantiate(optimizer_config, params)
     out = {"optimizer": optimizer}
@@ -40,9 +40,9 @@ def instantiate_optimizer_and_scheduler(
 
 def generate_hydra_config_from_overrides(
     config_path: str = "../config",
-    version_base: str | None = None,
+    version_base: str = None,
     config_name: str = "base",
-    overrides: list[str] | None = None,
+    overrides: list[str] = None,
 ) -> DictConfig:
 
     if overrides is None:

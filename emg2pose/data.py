@@ -166,8 +166,8 @@ class WindowedEmgDataset(torch.utils.data.Dataset):
     """
 
     hdf5_path: Path
-    window_length: InitVar[int | None] = 10_000
-    stride: InitVar[int | None] = None
+    window_length: InitVar[int] = 10_000
+    stride: InitVar[int] = None
     padding: InitVar[tuple[int, int]] = (0, 0)
     jitter: bool = False
     transform: Transform[np.ndarray, torch.Tensor] = field(
@@ -177,8 +177,8 @@ class WindowedEmgDataset(torch.utils.data.Dataset):
 
     def __post_init__(
         self,
-        window_length: int | None,
-        stride: int | None,
+        window_length: int,
+        stride: int,
         padding: tuple[int, int],
     ) -> None:
         self.session_length = len(self.session)

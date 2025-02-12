@@ -255,7 +255,7 @@ class TdsStage(nn.Module):
         channels: int = 8,
         feature_width: int = 2,
         kernel_width: int = 1,
-        out_channels: int | None = None,
+        out_channels: int = None,
     ):
         super().__init__()
         """Stage of several TdsBlocks preceded by a non-separable sub-sampling conv.
@@ -515,7 +515,7 @@ class SequentialLSTM(nn.Module):
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.lstm = nn.LSTM(in_channels, hidden_size, num_layers, batch_first=True)
-        self.hidden: tuple[torch.Tensor, torch.Tensor] | None = None
+        self.hidden: tuple[torch.Tensor, torch.Tensor] = None
         self.mlp_out = nn.Sequential(
             nn.LeakyReLU(), nn.Linear(hidden_size, out_channels)
         )

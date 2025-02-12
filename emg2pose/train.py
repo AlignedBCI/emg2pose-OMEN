@@ -75,7 +75,7 @@ def make_lightning_module(config: DictConfig):
 
 def train(
     config: DictConfig,
-    extra_callbacks: Sequence[Callable] | None = None,
+    extra_callbacks: Sequence[Callable] = None,
 ):
     log.info(f"\nConfig:\n{OmegaConf.to_yaml(config)}")
 

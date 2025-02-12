@@ -36,7 +36,7 @@ class WindowedEmgDataModule(pl.LightningDataModule):
         train_sessions: Sequence[Path],
         val_sessions: Sequence[Path],
         test_sessions: Sequence[Path],
-        val_test_window_length: int | None = None,
+        val_test_window_length: int = None,
         skip_ik_failures: bool = False,
     ) -> None:
         super().__init__()
@@ -58,7 +58,7 @@ class WindowedEmgDataModule(pl.LightningDataModule):
 
         self.skip_ik_failures = skip_ik_failures
 
-    def setup(self, stage: str | None = None) -> None:
+    def setup(self, stage: str = None) -> None:
         self.train_dataset = ConcatDataset(
             [
                 WindowedEmgDataset(
@@ -134,7 +134,7 @@ class Emg2PoseModule(pl.LightningModule):
         optimizer_conf: DictConfig,
         lr_scheduler_conf: DictConfig,
         provide_initial_pos: bool = False,
-        loss_weights: dict[str, float] | None = None,
+        loss_weights: dict[str, float] = None,
     ) -> None:
 
         super().__init__()
@@ -180,7 +180,7 @@ class Emg2PoseModule(pl.LightningModule):
         return self._step(batch, stage="val")
 
     def test_step(
-        self, batch, batch_idx, dataloader_idx: int | None = None
+        self, batch, batch_idx, dataloader_idx: int = None
     ) -> torch.Tensor:
         return self._step(batch, stage="test")
 

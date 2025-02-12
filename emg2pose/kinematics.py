@@ -331,7 +331,7 @@ def _broadcast_joint_angles_and_hand_model(
 
 def _batched_forward_kinematics(
     joint_angles: torch.Tensor,
-    hand_model: HandModel | TorchHandModel | None = None,
+    hand_model: HandModel | TorchHandModel = None,
     degrees: bool = False,
 ) -> torch.Tensor:
     """Get marker positions from joint angles (batching supported).
@@ -380,7 +380,7 @@ def _batched_forward_kinematics(
 
 
 def forward_kinematics(
-    joint_angles: torch.Tensor, hand_model: HandModel | None = None
+    joint_angles: torch.Tensor, hand_model: HandModel = None
 ) -> torch.Tensor:
     """Convert joint angles to 3D coordinates."""
 

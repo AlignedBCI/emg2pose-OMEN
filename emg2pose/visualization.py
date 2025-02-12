@@ -62,7 +62,7 @@ def mirror_profile(profile: HandModel) -> HandModel:
 def skin_vertices(
     profile: HandModel,
     joint_angles: torch.Tensor,
-    wrist_transforms: torch.Tensor | None = None,
+    wrist_transforms: torch.Tensor = None,
 ) -> torch.Tensor:
 
     assert profile.mesh_vertices is not None, "mesh vertices should not be none"
@@ -94,7 +94,7 @@ def skin_vertices(
 def skin_vertices_np(
     profile: HandModel,
     joint_angles: np.ndarray,
-    wrist_transforms: np.ndarray | None = None,
+    wrist_transforms: np.ndarray = None,
 ) -> np.ndarray:
     vertices = skin_vertices(
         profile,
