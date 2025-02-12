@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 
 if __name__ == "__main__":
-    DATA_DIR = "F:/emg2pose/emg2pose_dataset_mini"
+    DATA_DIR = "F:/emg2pose/emg2pose_dataset"
     if not Path(DATA_DIR).exists():
-        DATA_DIR = "/om2/user/claudif/DecodingAlgorithms/datasets/emg2pose/emg2pose_dataset_mini"
+        DATA_DIR = "/om2/user/claudif/DecodingAlgorithms/datasets/emg2pose/emg2pose_dataset"
     assert Path(DATA_DIR).exists(), f"Data directory {DATA_DIR} does not exist"
 
     # set HYDRA_FULL_ERROR=1

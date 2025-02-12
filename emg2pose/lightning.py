@@ -169,7 +169,7 @@ class Emg2PoseModule(pl.LightningModule):
         loss = 0.0
         for loss_name, weight in self.loss_weights.items():
             loss += metrics[f"{stage}_{loss_name}"] * weight
-        self.log(f"{stage}_loss", loss, sync_dist=True)
+        self.log(f"{stage}_loss", loss, sync_dist=True, prog_bar=True)
 
         return loss
 

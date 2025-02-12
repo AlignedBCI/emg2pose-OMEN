@@ -5,6 +5,7 @@ __pycache__/
 devnotes.md
 # C extensions
 *.so
+*log
 
 # Distribution / packaging
 .Python
