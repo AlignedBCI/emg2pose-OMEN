@@ -11,7 +11,7 @@ if __name__ == "__main__":
     os.environ["HYDRA_FULL_ERROR"] = "1"
 
     cmd = f"""
-    python -m emg2pose.train train=True eval=True experiment=tracking_omen data_split=mini_split data_location="{DATA_DIR}"
+    python -m emg2pose.train train=True eval=True experiment=tracking_omen data_split=full_split data_location="{DATA_DIR}"
     """
 
     os.system(cmd)
