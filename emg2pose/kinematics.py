@@ -125,7 +125,7 @@ def load_default_hand_model() -> HandModel:
 
 
 def apply_to_hand_model(
-    hand_model: HandModel | TorchHandModel,
+    hand_model: HandModel,
     field_fn: Callable[[torch.Tensor], torch.Tensor],
 ) -> HandModel:
     """Apply a function `field_fn` to each field in a HandModel
@@ -158,7 +158,7 @@ def apply_to_hand_model(
 
 
 def broadcast_hand_model_to(
-    hand_model: HandModel | TorchHandModel, leading_dims: tuple[int, ...]
+    hand_model: HandModel, leading_dims: tuple[int, ...]
 ) -> HandModel:
     """Broadcast hand_model along leading dims.
 
@@ -196,7 +196,7 @@ def broadcast_hand_model_to(
 
 
 def get_hand_model_leading_dims(
-    hand_model: HandModel | TorchHandModel,
+    hand_model: HandModel,
 ) -> tuple[int, ...]:
     """Utility function to get leading dims from HandModel
 
@@ -239,8 +239,8 @@ def get_joint_angle_leading_dims(joint_angles: torch.Tensor) -> tuple[int, ...]:
 
 
 def _broadcast_joint_angles_and_hand_model(
-    joint_angles: torch.Tensor, hand_model: HandModel | TorchHandModel
-) -> tuple[torch.Tensor, HandModel | TorchHandModel]:
+    joint_angles: torch.Tensor, hand_model: HandModel
+) -> tuple[torch.Tensor, HandModel]:
     """Helper function to broadcast joint angles and hand models so that
     they work with `forward_kinematics`.
 
@@ -331,7 +331,7 @@ def _broadcast_joint_angles_and_hand_model(
 
 def _batched_forward_kinematics(
     joint_angles: torch.Tensor,
-    hand_model: HandModel | TorchHandModel = None,
+    hand_model: HandModel = None,
     degrees: bool = False,
 ) -> torch.Tensor:
     """Get marker positions from joint angles (batching supported).
