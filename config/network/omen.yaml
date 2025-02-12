@@ -33,9 +33,9 @@ config:
     can_heads:
       _target_: omen.modules.MLP
       activation: ${network.config.portent.activation}
-      n_hidden: 64
+      n_hidden: 128
       n_inputs: ${network.config.portent.encoder.n_outputs}  # Reference encoding_size
-      n_layers: 1
+      n_layers: 2
       n_outputs: ${network.config.cans.module.N}  # Fixed reference
       dropout: 0.2
 
@@ -46,10 +46,10 @@ config:
       dilation: 11
       kernel_size: 11 
       n_conv_groups: 1
-      n_hidden: 128
+      n_hidden: 256
       n_inputs: ${network.config.n_inputs}  # Reference the top-level n_inputs
       n_kernels: 4
-      n_layers: 1
+      n_layers: 4
       n_outputs: 64 
       spatial_conv: false
       dropout: 0.2
