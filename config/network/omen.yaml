@@ -42,7 +42,7 @@ config:
     encoder:
       _target_: omen.modules.tCNN
       activation: ${network.config.portent.activation}
-      channel_kernel_size: 1
+      channel_kernel_size: 5
       dilation: 11
       kernel_size: 11 
       n_conv_groups: 1
@@ -51,7 +51,7 @@ config:
       n_kernels: 4
       n_layers: 4
       n_outputs: 64 
-      spatial_conv: false
+      spatial_conv: true
       dropout: 0.2
 
   # Semantic heads
