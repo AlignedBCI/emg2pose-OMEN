@@ -5,9 +5,9 @@
 #SBATCH --cpus-per-task=4      # CPUs per task/GPU
 #SBATCH -J emg2pose_omen   # job name
 #SBATCH --mem=24GB                   # memory per node in GB
-#SBATCH -o emg2pose_omen.log
-#SBATCH -e emg2pose_omen_err.log
-#SBATCH --gres=gpu: --constraint=12GB
+#SBATCH -o emg2pose_omen_%j.log
+#SBATCH -e emg2pose_omen_err_%j.log
+#SBATCH --gres=gpu:4 --constraint=12GB
 
 
 # ---------------------------------- module ---------------------------------- #
