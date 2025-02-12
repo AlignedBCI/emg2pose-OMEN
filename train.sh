@@ -19,6 +19,9 @@ cd /om2/user/claudif/DecodingAlgorithms/emg2pose-OMEN
 
 # execute in singularity container
 export CUDA_VISIBLE_DEVICES=0,1,2,3
-conda activate omen2
+
+source /om2/user/claudif/myenv/bin/activate
+
+conda deactivate
 
 srun python run.py
