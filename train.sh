@@ -18,7 +18,7 @@ module load openmind/miniconda/4.9.2-py3.9
 cd /om2/user/claudif/DecodingAlgorithms/emg2pose-OMEN
 
 # execute in singularity container
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 conda activate omen2
 
 srun python run.py

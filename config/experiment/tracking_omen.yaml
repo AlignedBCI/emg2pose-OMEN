@@ -14,9 +14,12 @@ pose_module:
 # Hyperparametersa
 optimizer:
   lr: .001
-datamodule:
+da
+tamodule:
   # Adding 1790 samples, which is the left_context of the tds network
   window_length: 11_790
   val_test_window_length: 11_790
+
 trainer:
   gradient_clip_val: 1
+  log_every_n_steps: 1
