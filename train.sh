@@ -6,7 +6,7 @@
 #SBATCH -J emg2pose_omen   # job name
 #SBATCH --mem=24GB                   # memory per node in GB
 #SBATCH -o emg2pose_omen_%j.log
-#SBATCH -e emg2pose_omen_err_%j.log
+#SBATCH -e emg2pose_omen_%j.err
 #SBATCH --gres=gpu:4 --constraint=12GB
 
 
