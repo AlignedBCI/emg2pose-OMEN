@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 if __name__ == "__main__":
-    FULL_SPLIT = False
+    FULL_SPLIT = True
 
     DATA_DIR = "F:/emg2pose"
     if not Path(DATA_DIR).exists():

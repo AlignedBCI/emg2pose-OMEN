@@ -173,13 +173,13 @@ class Emg2PoseModule(pl.LightningModule):
         
         # Sync less frequently during training
         should_sync = (stage != "train") or (self.global_step % 100 == 0)
-        self.log_dict(metrics, sync_dist=should_sync)
+        self.log_dict(metrics, sync_dist=True)
 
         # Compute loss
         loss = 0.0
         for loss_name, weight in self.loss_weights.items():
             loss += metrics[f"{stage}_{loss_name}"] * weight
-        self.log(f"{stage}_loss", loss, sync_dist=should_sync, prog_bar=True)
+        self.log(f"{stage}_loss", loss, sync_dist=True)
         return loss
 
     def training_step(self, batch, batch_idx) -> torch.Tensor:
