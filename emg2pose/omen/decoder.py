@@ -2,7 +2,7 @@ from torch import nn
 
 
 class ScalingDecoder(nn.Module):
-    def __init__(self, scale:float = 1.0):
+    def __init__(self, scale:float = 0.1):
         super().__init__()
         self.scale = scale
 

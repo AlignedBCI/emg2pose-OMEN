@@ -113,10 +113,9 @@ def train(
         callbacks=callbacks,
         logger=instantiate(config.logger),
     )
-
+    log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
     results = {}
     if config.train:
-
         # Train
         trainer.fit(module, datamodule)
 

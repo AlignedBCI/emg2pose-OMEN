@@ -100,9 +100,9 @@ class WindowedEmgDataModule(pl.LightningDataModule):
         )
 
         # Print dataset sizes
-        lgr.info(f"Train dataset size: {len(self.train_dataset)}")
-        lgr.info(f"Val dataset size: {len(self.val_dataset)}")
-        lgr.info(f"Test dataset size: {len(self.test_dataset)}")
+        lgr.info(f"Train dataset n_batches: {int(len(self.train_dataset) / self.batch_size)}")
+        lgr.info(f"Val dataset n_batches: {int(len(self.val_dataset) / self.batch_size)}")
+        lgr.info(f"Test dataset n_batches: {int(len(self.test_dataset) / self.batch_size)}")
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
@@ -175,22 +175,21 @@ class Emg2PoseModule(pl.LightningModule):
         for loss_name, weight in self.loss_weights.items():
             loss += metrics[f"{stage}_{loss_name}"] * weight
         self.log(f"{stage}_loss", loss, sync_dist=True, prog_bar=True)
-        
-
         return loss
 
     def training_step(self, batch, batch_idx) -> torch.Tensor:
-        lgr.info(f"Training step {batch_idx}")
+        if batch_idx % 100 == 0: 
+            lgr.info(f"Training step {batch_idx}")
         return self._step(batch, stage="train")
 
     def validation_step(self, batch, batch_idx) -> torch.Tensor:
-        lgr.info(f"Validation step {batch_idx}")
+        if batch_idx % 100 == 0: 
+            lgr.info(f"Validation step {batch_idx}")
         return self._step(batch, stage="val")
 
     def test_step(
         self, batch, batch_idx, dataloader_idx: int = None
     ) -> torch.Tensor:
-        lgr.info(f"Test step {batch_idx}")
         return self._step(batch, stage="test")
 
     def configure_optimizers(self):
