@@ -6,7 +6,7 @@ devnotes.md
 # C extensions
 *.so
 *log
-
+*.err
 # Distribution / packaging
 .Python
 build/
