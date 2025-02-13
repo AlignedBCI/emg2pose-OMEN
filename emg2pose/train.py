@@ -117,7 +117,6 @@ def train(
         **config.trainer,
         callbacks=callbacks,
         logger=instantiate(config.logger),
-        strategy='ddp',
     )
     log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
     results = {}
