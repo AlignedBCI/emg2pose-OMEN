@@ -20,6 +20,8 @@ from emg2pose.lightning import Emg2PoseModule
 from emg2pose.transforms import Transform
 from hydra.utils import instantiate
 from omegaconf import DictConfig, ListConfig, OmegaConf
+import torch
+import torch.multiprocessing
 
 
 log = logging.getLogger(__name__)
@@ -108,11 +110,14 @@ def train(
     if extra_callbacks is not None:
         callbacks.extend(extra_callbacks)
 
+    # Add this at the start of your main function
+    torch.multiprocessing.set_start_method('spawn', force=True)
+    
     trainer = pl.Trainer(
         **config.trainer,
         callbacks=callbacks,
         logger=instantiate(config.logger),
-        gradient_clip_val=None,
+        strategy='ddp',
     )
     log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
     results = {}

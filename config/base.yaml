@@ -11,7 +11,7 @@ data_location: ~/emg2pose_data
 seed: 42
 
 batch_size: 64
-num_workers: 0  # Number of workers for dataloading
+num_workers: 4  # Number of workers for dataloading
 
 train: True  # Whether to run training
 eval: True  # Whether to run evaluation on validation and test splits
@@ -28,7 +28,7 @@ trainer:
   max_epochs: 500
   accumulate_grad_batches: 2  # Accumulate gradients over multiple steps
   strategy: ddp_find_unused_parameters_false
-  
+
 # By default: static learning rate
 lr_scheduler:
   null
