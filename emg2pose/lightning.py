@@ -159,7 +159,6 @@ class Emg2PoseModule(pl.LightningModule):
     def _step(
         self, batch: Mapping[str, torch.Tensor], stage: str = "train"
     ) -> torch.Tensor:
-
         # Generate predictions
         batch["no_ik_failure"] = self.update_ik_failure_mask(batch["no_ik_failure"])
         preds, targets, no_ik_failure = self.forward(batch)
@@ -168,13 +167,16 @@ class Emg2PoseModule(pl.LightningModule):
         metrics = {}
         for metric in self.metrics_list:
             metrics.update(metric(preds, targets, no_ik_failure, stage))
-        self.log_dict(metrics, sync_dist=True)
+        
+        # Sync less frequently during training
+        should_sync = (stage != "train") or (self.global_step % 100 == 0)
+        self.log_dict(metrics, sync_dist=should_sync)
 
         # Compute loss
         loss = 0.0
         for loss_name, weight in self.loss_weights.items():
             loss += metrics[f"{stage}_{loss_name}"] * weight
-        self.log(f"{stage}_loss", loss, sync_dist=True, prog_bar=True)
+        self.log(f"{stage}_loss", loss, sync_dist=should_sync, prog_bar=True)
         return loss
 
     def training_step(self, batch, batch_idx) -> torch.Tensor:

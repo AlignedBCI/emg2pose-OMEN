@@ -26,7 +26,9 @@ loss_weights:
 
 trainer:
   max_epochs: 500
-
+  accumulate_grad_batches: 2  # Accumulate gradients over multiple steps
+  strategy: ddp_find_unused_parameters_false
+  
 # By default: static learning rate
 lr_scheduler:
   null
