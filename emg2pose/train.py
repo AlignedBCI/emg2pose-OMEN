@@ -112,7 +112,6 @@ def train(
         **config.trainer,
         callbacks=callbacks,
         logger=instantiate(config.logger),
-\\
         gradient_clip_val=None,
     )
     log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
