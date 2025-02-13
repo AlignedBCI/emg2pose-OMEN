@@ -208,9 +208,7 @@ class WindowedEmgDataset(torch.utils.data.Dataset):
 
     @property
     def session(self):
-        if not hasattr(self, "_session"):
-            self._session = Emg2PoseSessionData(self.hdf5_path)
-        return self._session
+        return Emg2PoseSessionData(self.hdf5_path)
 
     @property
     def blocks(self) -> list[tuple[int, int]]:
@@ -236,48 +234,50 @@ class WindowedEmgDataset(torch.utils.data.Dataset):
 
     def precompute_windows(self) -> list[tuple[int, int]]:
         """For each dataset idx, precompute the EMG start and times."""
-        windows = []
-        cumsum = np.cumsum([0] + [self._get_block_len(b) for b in self.blocks])
+        with Emg2PoseSessionData(self.hdf5_path) as session:
+            windows = []
+            cumsum = np.cumsum([0] + [self._get_block_len(b) for b in self.blocks])
 
-        for idx in range(len(self)):
-            block_idx = np.searchsorted(cumsum, idx, "right") - 1
-            start_idx, end_idx = self.blocks[block_idx]
-            relative_idx = idx - cumsum[block_idx]
-            windows.append((start_idx + relative_idx * self.stride, end_idx))
+            for idx in range(len(self)):
+                block_idx = np.searchsorted(cumsum, idx, "right") - 1
+                start_idx, end_idx = self.blocks[block_idx]
+                relative_idx = idx - cumsum[block_idx]
+                windows.append((start_idx + relative_idx * self.stride, end_idx))
 
-        return windows
+            return windows
 
     def __getitem__(self, idx: int) -> dict[str, torch.Tensor]:
+        # Use context manager to properly handle file opening/closing
+        with Emg2PoseSessionData(self.hdf5_path) as session:
+            # Randomly jitter the window offset
+            offset, end_idx = self.windows[idx]
+            leftover = end_idx - (offset + self.window_length)
+            if leftover < 0:
+                raise IndexError(f"Index {idx} out of bounds, leftover {leftover}")
+            if leftover > 0 and self.jitter:
+                offset += np.random.randint(0, min(self.stride, leftover))
 
-        # Randomly jitter the window offset
-        offset, end_idx = self.windows[idx]
-        leftover = end_idx - (offset + self.window_length)
-        if leftover < 0:
-            raise IndexError(f"Index {idx} out of bounds, leftover {leftover}")
-        if leftover > 0 and self.jitter:
-            offset += np.random.randint(0, min(self.stride, leftover))
+            # Expand window to include contextual padding and fetch
+            window_start = max(offset - self.left_padding, 0)
+            window_end = offset + self.window_length + self.right_padding
+            window = session[window_start:window_end]
 
-        # Expand window to include contextual padding and fetch
-        window_start = max(offset - self.left_padding, 0)
-        window_end = offset + self.window_length + self.right_padding
-        window = self.session[window_start:window_end]
+            # Extract EMG tensor corresponding to the window
+            emg = self.transform(window)
+            assert torch.is_tensor(emg)
 
-        # Extract EMG tensor corresponding to the window
-        emg = self.transform(window)
-        assert torch.is_tensor(emg)
+            # Extract joint angle labels
+            joint_angles = window[Emg2PoseSessionData.JOINT_ANGLES]
+            joint_angles = torch.as_tensor(joint_angles)
 
-        # Extract joint angle labels
-        joint_angles = window[Emg2PoseSessionData.JOINT_ANGLES]
-        joint_angles = torch.as_tensor(joint_angles)
-
-        # Mask of samples without IK failures
-        no_ik_failure = torch.as_tensor(
-            self.session.no_ik_failure[window_start:window_end]
-        )
-        return {
-            "emg": emg.T,  # CT
-            "joint_angles": joint_angles.T,  # CT
-            "no_ik_failure": no_ik_failure,  # T
-            "window_start_idx": window_start,
-            "window_end_idx": window_end,
-        }
+            # Mask of samples without IK failures
+            no_ik_failure = torch.as_tensor(
+                session.no_ik_failure[window_start:window_end]
+            )
+            return {
+                "emg": emg.T,  # CT
+                "joint_angles": joint_angles.T,  # CT
+                "no_ik_failure": no_ik_failure,  # T
+                "window_start_idx": window_start,
+                "window_end_idx": window_end,
+            }

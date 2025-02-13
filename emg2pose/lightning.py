@@ -111,6 +111,7 @@ class WindowedEmgDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=True,
             shuffle=True,
+            persistent_workers=True,
         )
 
     def val_dataloader(self) -> DataLoader:
@@ -120,6 +121,7 @@ class WindowedEmgDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=True,
             shuffle=False,
+            persistent_workers=True,
         )
 
     def test_dataloader(self) -> DataLoader:
@@ -129,6 +131,7 @@ class WindowedEmgDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=True,
             shuffle=False,
+            persistent_workers=True,
         )
 
 
