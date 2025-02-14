@@ -11,7 +11,7 @@ pose_module:
   predict_vel: True
   state_condition: False
 
-# Hyperparametersa
+# Hyperparameters
 optimizer:
   lr: .001
 
@@ -24,3 +24,16 @@ trainer:
   log_every_n_steps: 50
   max_epochs: 250
   check_val_every_n_epoch: 1
+  accumulate_grad_batches: 1
+
+network:
+  config:
+    portent:
+      can_heads:
+        n_hidden: 64
+        n_layers: 0
+
+      encoder:
+        n_kernels: 8
+        n_layers: 2
+        n_outputs: 64

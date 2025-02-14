@@ -172,7 +172,6 @@ class Emg2PoseModule(pl.LightningModule):
             metrics.update(metric(preds, targets, no_ik_failure, stage))
         
         # Sync less frequently during training
-        should_sync = (stage != "train") or (self.global_step % 100 == 0)
         self.log_dict(metrics, sync_dist=True)
 
         # Compute loss
