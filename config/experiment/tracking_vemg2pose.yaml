@@ -1,7 +1,7 @@
 # @package _global_
 defaults:
   - /pose_module: pose_stateful
-  - /pose_module/decoder: lstm
+  - /pose_module/decoder: omen_decoder
   - /network: tds
   - _self_
 

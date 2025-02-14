@@ -3,6 +3,7 @@ from pathlib import Path
 
 if __name__ == "__main__":
     FULL_SPLIT = True
+    EXPERIMENT = "tracking_vemg2pose"
 
     DATA_DIR = "F:/emg2pose"
     if not Path(DATA_DIR).exists():
@@ -19,7 +20,7 @@ if __name__ == "__main__":
 
     split_name = "full_split" if FULL_SPLIT else "mini_split"
     cmd = f"""
-    python -m emg2pose.train train=True eval=True experiment=tracking_omen data_split={split_name} data_location="{DATA_DIR}"
+    python -m emg2pose.train train=True eval=True experiment={EXPERIMENT} data_split={split_name} data_location="{DATA_DIR}"
     """
 
     os.system(cmd)
