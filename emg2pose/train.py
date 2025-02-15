@@ -118,7 +118,7 @@ def train(
         **config.trainer,
         callbacks=callbacks,
         logger=instantiate(config.logger),
-        strategy='ddp_find_unused_parameters_true' if n_gpus > 1 else None
+        strategy='ddp_find_unused_parameters_true' if n_gpus > 1 else 'auto'
     )
     log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
 

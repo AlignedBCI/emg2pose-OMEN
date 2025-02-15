@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 if __name__ == "__main__":
-    FULL_SPLIT = True
+    FULL_SPLIT = False
     EXPERIMENT = "tracking_vemg2pose"
 
     DATA_DIR = "F:/emg2pose"
