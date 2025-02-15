@@ -170,7 +170,7 @@ the following script.
 Note that the `experiment` option to this script should match the checkpoint's experiment.
 
 ```shell
-python -m emg2pose.test_analysis \
+python -m emg2pose.test_analysis  \
 data_location="${HOME}/emg2pose_dataset" \
 experiment=tracking_vemg2pose \
 checkpoint="${HOME}/emg2pose_model_checkpoints/tracking_vemg2pose.ckpt"

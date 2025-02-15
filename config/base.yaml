@@ -39,6 +39,7 @@ callbacks:
     mode: ${monitor_mode}
     save_last: True
     verbose: True
+    dirpath: "./models"
   - _target_: pytorch_lightning.callbacks.EarlyStopping
     monitor: ${monitor_metric}
     mode: ${monitor_mode}

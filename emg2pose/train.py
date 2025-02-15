@@ -113,11 +113,12 @@ def train(
     # Add this at the start of your main function
     torch.multiprocessing.set_start_method('spawn', force=True)
     
+    n_gpus = torch.cuda.device_count()
     trainer = pl.Trainer(
         **config.trainer,
         callbacks=callbacks,
         logger=instantiate(config.logger),
-        # strategy='ddp_find_unused_parameters_true'
+        strategy='ddp_find_unused_parameters_true' if n_gpus > 1 else None
     )
     log.info(f"Config: {OmegaConf.to_container(config, resolve=True)}")
 
