@@ -34,20 +34,20 @@ config:
     can_heads:
       _target_: omen.modules.MLP
       activation: ${pose_module.decoder.config.portent.activation}
-      n_hidden: 64
+      n_hidden: 128
       n_inputs: ${pose_module.decoder.config.portent.encoder.n_outputs}  # Reference encoding_size
-      n_layers: 1
+      n_layers: 2
       n_outputs: ${pose_module.decoder.config.cans.module.N}  # Fixed reference
-      dropout: 0.1
+      dropout: 0.0
 
     encoder:
       _target_: omen.modules.MLP
       activation: ${pose_module.decoder.config.portent.activation}
-      n_hidden: 256
+      n_hidden: 512
       n_inputs: ${pose_module.decoder.config.n_inputs}  # Reference the top-level n_inputs
-      n_layers: 2
+      n_layers: 3
       n_outputs: 128 
-      dropout: 0.1
+      dropout: 0.0
 
   # Semantic heads
   semantic_heads:
