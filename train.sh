@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -t 48:00:00                  
+#SBATCH -t 24:00:00                  
 #SBATCH -N 2                         
 #SBATCH --ntasks-per-node=4                    
 #SBATCH --cpus-per-task=8      
@@ -7,7 +7,7 @@
 #SBATCH --mem=150GB                   
 #SBATCH -o emg2pose_omen_%j.log
 #SBATCH -e emg2pose_omen_%j.err
-#SBATCH --gres=gpu:4 --constraint=12GB  # or SBATCH --gpus-per-node=4
+#SBATCH --gpus-per-node=4 # #SBATCH --gres=gpu:4 --constraint=12GB  # or 
 
 cd /om2/user/claudif/DecodingAlgorithms/emg2pose-OMEN
 
