@@ -41,18 +41,12 @@ config:
       dropout: 0.1
 
     encoder:
-      _target_: omen.modules.tCNN
+      _target_: omen.modules.MLP
       activation: ${pose_module.decoder.config.portent.activation}
-      channel_kernel_size: 1
-      dilation: 3
-      kernel_size: 11 
-      n_conv_groups: -1
       n_hidden: 256
       n_inputs: ${pose_module.decoder.config.n_inputs}  # Reference the top-level n_inputs
-      n_kernels: 4
       n_layers: 2
       n_outputs: 128 
-      spatial_conv: false
       dropout: 0.1
 
   # Semantic heads
