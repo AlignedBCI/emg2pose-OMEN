@@ -7,7 +7,7 @@
 #SBATCH --mem=150GB                   
 #SBATCH -o emg2pose_omen_%j.log
 #SBATCH -e emg2pose_omen_%j.err
-#SBATCH --gres=gpu:4 --constraint=12GB
+#SBATCH --gpus-per-node=4
 
 
 cd /om2/user/claudif/DecodingAlgorithms/emg2pose-OMEN
