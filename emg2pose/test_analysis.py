@@ -41,12 +41,12 @@ class EMG2PoseEvaluation:
     batch_size: int = 32
 
     def __post_init__(self):
+        self.data_dir = self.config.data_location
         self.df = self.get_corpus_df()
         self.groupby = self.df.groupby(self.conditions)
         self.module = self.get_module()
         self.dataloaders = self.get_dataloaders()
-        self.data_dir = self.config.data_location
-
+        
     def get_corpus_df(self):
         metadata_file = os.path.join(self.data_dir, "metadata.csv")
         df = pd.read_csv(metadata_file).query(f"split=='{self.split}'")
