@@ -6,7 +6,7 @@ config:
   n_variables: 20  # Must be specified
   periodic: null  # Must be specified, or is set to [False] * n_variables
   sessions: null  # must be a list of strings with sessions names
-  n_inputs: 84  # must be a list of integers with the number of "channels" for each session
+  n_inputs: 64  # must be a list of integers with the number of "channels" for each session
   datashape: B C T
   output_scale_factor: 0.1
 
