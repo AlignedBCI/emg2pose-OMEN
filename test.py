@@ -6,6 +6,7 @@ if __name__ == "__main__":
     EXPERIMENT = "tracking_vemg2pose"
     # Get absolute path of the script's directory
     BASE_DIR = Path(__file__).parent.absolute()
+    
     CHECKPOINT = str(BASE_DIR / "logs/2025-02-16/08-53-08/models/last.ckpt")
     assert Path(CHECKPOINT).exists(), f"Checkpoint {CHECKPOINT} does not exist"
 

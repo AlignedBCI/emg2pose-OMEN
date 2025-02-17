@@ -8,7 +8,7 @@ config:
   sessions: null  # must be a list of strings with sessions names
   n_inputs: 84  # must be a list of integers with the number of "channels" for each session
   datashape: B C T
-  output_scale_factor: 0.01
+  output_scale_factor: 0.1
 
   # CAN parameters
   cans:
@@ -34,18 +34,18 @@ config:
     can_heads:
       _target_: omen.modules.MLP
       activation: ${pose_module.decoder.config.portent.activation}
-      n_hidden: 32
+      n_hidden: 256
       n_inputs: ${pose_module.decoder.config.portent.encoder.n_outputs}  # Reference encoding_size
-      n_layers: -1
+      n_layers: 5
       n_outputs: ${pose_module.decoder.config.cans.module.N}  # Fixed reference
       dropout: 0.0
 
     encoder:
       _target_: omen.modules.MLP
       activation: ${pose_module.decoder.config.portent.activation}
-      n_hidden: 32
+      n_hidden: 512
       n_inputs: ${pose_module.decoder.config.n_inputs}  # Reference the top-level n_inputs
-      n_layers: -1
+      n_layers: 5
       n_outputs: 128 
       dropout: 0.0
 
