@@ -15,7 +15,7 @@ config:
     module:
       _target_: omen.can.CAN
       N: 48
-      beta: 10
+      beta: 1
       sigma: 0.6
       tau: 1.7
       theta_pad: 0.2
